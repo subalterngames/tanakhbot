@@ -1,0 +1,4 @@
+.idea/
+*.pyc
+secrets.txt
+bot_secrets.txt
