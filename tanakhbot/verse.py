@@ -13,7 +13,7 @@ jps_abbrvs = {"THE JPS TANAKH: Gender-Sensitive Edition": "Gender-Sensitive Edit
 class Verse:
     def __init__(self):
         # Get the Tanakh.
-        tanakh: dict = loads(Path(resource_filename(__name__, "data/tanakh.json")).read_text())
+        tanakh: dict = loads(Path(resource_filename(__name__, "data/tanakh.json")).read_text(encoding="utf-8"))
         # Get today.
         today = datetime.today()
         # Get a random book.
