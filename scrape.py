@@ -2,7 +2,7 @@ import re
 from json import dumps
 from pathlib import Path
 from requests import get
-
+from tqdm import tqdm
 
 """
 Scrape Sefaria for the Tanakh.
@@ -35,6 +35,8 @@ def remove_html(v) -> str:
     v = re.sub("<sup (.*?)>(.*?)</sup>", "", v)
     # Remove the footnote text. The JPS translation has a lot of these.
     v = re.sub('<i class="footnote">(.*?)</i>', "", v)
+    # Replace br
+    v = v.replace("<br>", "\n")
     v = re.sub(clean, "", v)
     assert "<" not in v, v0
     return v
@@ -55,8 +57,10 @@ jps_versions = [Bible(name="THE JPS TANAKH: Gender-Sensitive Edition"),
                 Bible(name="The Contemporary Torah, Jewish Publication Society, 2006"),
                 Bible(name="Tanakh: The Holy Scriptures, published by JPS")]
 tanakh = dict()
+pbar = tqdm(total=len(books))
 # Iterate through each book in the Tanakh,
 for book in books:
+    pbar.set_description(book)
     tanakh[book] = dict()
     # Get the book's index data.
     index = get(f"{api_prefix}index/{book}").json()
@@ -96,5 +100,6 @@ for book in books:
                      "jps_ok": jps_ok,
                      "he": verse_he}
             tanakh[book][chapter].append(verse)
+    pbar.update(1)
 # Write to disk.
 Path("./tanakhbot/data/tanakh.json").resolve().write_text(dumps(tanakh))
