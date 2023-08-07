@@ -21,16 +21,18 @@ class Verse:
         book: str = books[randint(0, len(books) - 1)]
         # Get a random chapter.
         chapters: List[str] = list(tanakh[book].keys())
-        chapter: str = chapters[randint(0, len(chapters) - 1)]
+        chapter_key: str = chapters[randint(0, len(chapters) - 1)]
+        chapter_number = int(chapter_key) + 1
         # Get a random verse.
-        verses = tanakh[book][chapter]
-        verse_number = randint(0, len(verses) - 1)
-        verse = verses[verse_number]
-        citation = f"**{book} {chapter}:{verse_number}**"
+        verses = tanakh[book][chapter_key]
+        verse_key: int = randint(0, len(verses) - 1)
+        verse_number: int = verse_key + 1
+        verse = verses[verse_key]
+        citation = f"**{book} {chapter_number}:{verse_number}**"
         # Log the citation.
         self.log: str = f"{today}: {citation}"
         # Get the URL.
-        url: str = f"https://www.sefaria.org/{book}.{chapter}.{verse_number}?lang=bi&aliyot=0".replace(" ", "_")
+        url: str = f"https://www.sefaria.org/{book}.{chapter_number}.{verse_number}?lang=bi&aliyot=0".replace(" ", "_")
         # Get the summary.
         jps = verse['jps']
         koren = verse['koren']
