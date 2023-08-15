@@ -20,13 +20,24 @@ class Bot(discord.Client):
 
         self.channel: int = int(channel)
         self.logging: bool = logging
-        self.summarize: bool = datetime.today().weekday() == 6
+        self.summarize: bool = datetime.today().weekday() == 4
         super().__init__()
 
     async def on_ready(self):
         # Connect to the Discord channel.
         channel = self.get_channel(self.channel)
-        text = self.get_summary() if self.summarize else self.get_verse()
+        if self.summarize:
+            text = "**Friday Round-Up**\n\n" \
+                   "It's Friday! Here are all the verses we've seen this week. We invite you to engage with the round-up by responding in writing or in art to any of these prompts:\n\n" \
+                   "- What resonances do you see among the verses?\n" \
+                   "- Imagine these verses are meant to go together. What story would they tell?\n" \
+                   "- What resonances do you see among the verses?\n\n" + self.get_summary()
+        else:
+            text = "**Pasuk A Day**\n\n" \
+                   "Hi, I'm TanakhBot! Every day except Saturday I post one random verse from the Torah, Prophets, or Writings (Tanakh). On Friday I'll post all 5 verses from this week. We invite you to engage with each verse by responding in writing or in art to any of these prompts:\n\n" \
+                   "- What surprises or calls out to you in this verse?\n" \
+                   "- What questions do you have about this verse?\n" \
+                   "- How is this verse making you feel today?\n\n" + self.get_verse()
         # Split the text into posts of <= 2000 characters.
         posts = [text[index: index + 2000] for index in range(0, len(text), 2000)]
         try:
