@@ -71,7 +71,7 @@ In a terminal:
 8. Add this line to the crontab file:
 
 ```
-0 15 * * 0-5 python3 ~/PATH/run.py > ~/path/to/log.txt
+0 15 * * * python3 ~/PATH/run.py > ~/path/to/log.txt
 ```
 
 Replace `15` (3:00 PM) with the correct time.
