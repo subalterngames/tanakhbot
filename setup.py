@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='tanakhbot',
-    version="1.0.1",
+    version="1.0.2",
     description='Discord bot that posts a random Tanakh verse per day.',
     long_description='Discord bot that posts a random Tanakh verse per day.',
     long_description_content_type='text/markdown',

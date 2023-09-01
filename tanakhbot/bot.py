@@ -25,7 +25,7 @@ class Bot(discord.Client):
 
     async def on_ready(self):
         # Connect to the Discord channel.
-        channel = self.get_channel(self.channel)
+        channel = await self.fetch_channel(self.channel)
         if self.summarize:
             text = "**Friday Round-Up**\n\n" \
                    "It's Friday! Here are all the verses we've seen this week. We invite you to engage with the round-up by responding in writing or in art to any of these prompts:\n\n" \
@@ -44,6 +44,8 @@ class Bot(discord.Client):
             # Post.
             for post in posts:
                 await channel.send(post)
+                if self.logging:
+                    self.log(post)
             # Quit.
             await self.close()
         except Exception as e:
