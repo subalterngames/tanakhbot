@@ -22,5 +22,5 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     keywords='bible tanakh jewish discord bot',
-    install_requires=['discord.py'],
+    install_requires=['discord.py==1.7.3'],
 )
